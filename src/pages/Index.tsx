@@ -1,12 +1,88 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import Navigation from "@/components/Navigation";
+import HeroSection from "@/components/HeroSection";
+import StudentDashboard from "@/components/StudentDashboard";
+import AcademicSection from "@/components/AcademicSection";
+import CodingSection from "@/components/CodingSection";
 
 const Index = () => {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+  const [currentView, setCurrentView] = useState("hero");
+  const [activeSection, setActiveSection] = useState("dashboard");
+
+  const handleGetStarted = () => {
+    setCurrentView("dashboard");
+  };
+
+  const handleSectionChange = (section: string) => {
+    setActiveSection(section);
+    setCurrentView("dashboard");
+  };
+
+  const renderContent = () => {
+    if (currentView === "hero") {
+      return <HeroSection />;
+    }
+
+    switch (activeSection) {
+      case "dashboard":
+        return <StudentDashboard />;
+      case "academic":
+        return <AcademicSection />;
+      case "coding":
+        return <CodingSection />;
+      case "collaborative":
+        return (
+          <div className="p-8 text-center">
+            <h2 className="text-3xl font-bold mb-4">Collaborative Features</h2>
+            <p className="text-muted-foreground">Coming soon - Live group coding rooms and pair programming</p>
+          </div>
+        );
+      case "achievements":
+        return (
+          <div className="p-8 text-center">
+            <h2 className="text-3xl font-bold mb-4">Achievements & Badges</h2>
+            <p className="text-muted-foreground">Track your progress and unlock new achievements</p>
+          </div>
+        );
+      case "settings":
+        return (
+          <div className="p-8 text-center">
+            <h2 className="text-3xl font-bold mb-4">Settings</h2>
+            <p className="text-muted-foreground">Customize your learning experience</p>
+          </div>
+        );
+      default:
+        return <StudentDashboard />;
+    }
+  };
+
+  if (currentView === "hero") {
+    return (
+      <div className="min-h-screen">
+        <HeroSection />
+        <div className="container mx-auto px-4 py-16">
+          <div className="text-center">
+            <button
+              onClick={handleGetStarted}
+              className="bg-gradient-hero text-white px-8 py-4 rounded-lg font-semibold text-lg hover:shadow-glow transition-all duration-300"
+            >
+              Access Student Portal
+            </button>
+          </div>
+        </div>
       </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-background flex">
+      <Navigation 
+        activeSection={activeSection} 
+        onSectionChange={handleSectionChange} 
+      />
+      <main className="flex-1 p-8 overflow-auto">
+        {renderContent()}
+      </main>
     </div>
   );
 };

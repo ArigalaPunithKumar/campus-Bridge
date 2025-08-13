@@ -2,39 +2,69 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Campus Bridge Design System - Academic meets Tech */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Academic Base Colors */
+    --background: 240 20% 98%;
+    --foreground: 215 25% 15%;
 
+    /* Card System */
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 215 25% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 215 25% 15%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Academic Primary - Deep University Blue */
+    --primary: 215 80% 25%;
+    --primary-foreground: 0 0% 98%;
+    --primary-glow: 215 75% 35%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Coding Accent - Bright Tech Colors */
+    --accent: 280 85% 60%;
+    --accent-foreground: 0 0% 98%;
+    --accent-glow: 280 80% 70%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Secondary - Soft Academic Gray */
+    --secondary: 210 15% 94%;
+    --secondary-foreground: 215 25% 25%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Muted Tones */
+    --muted: 210 15% 96%;
+    --muted-foreground: 215 15% 45%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Status Colors */
+    --success: 142 75% 40%;
+    --success-foreground: 0 0% 98%;
+    
+    --warning: 38 95% 55%;
+    --warning-foreground: 0 0% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 0 0% 98%;
+
+    /* Interactive Elements */
+    --border: 215 20% 88%;
+    --input: 215 20% 88%;
+    --ring: 215 80% 25%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-accent: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--accent-glow)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100% / 0.9), hsl(0 0% 100% / 0.7));
+
+    /* Shadows */
+    --shadow-soft: 0 2px 10px hsl(var(--primary) / 0.1);
+    --shadow-medium: 0 8px 25px hsl(var(--primary) / 0.15);
+    --shadow-strong: 0 15px 35px hsl(var(--primary) / 0.2);
+    --shadow-glow: 0 0 40px hsl(var(--accent) / 0.3);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --radius: 0.5rem;
 
