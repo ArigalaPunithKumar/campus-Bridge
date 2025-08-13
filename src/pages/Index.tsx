@@ -4,6 +4,8 @@ import HeroSection from "@/components/HeroSection";
 import StudentDashboard from "@/components/StudentDashboard";
 import AcademicSection from "@/components/AcademicSection";
 import CodingSection from "@/components/CodingSection";
+import SettingsSection from "@/components/SettingsSection";
+import AchievementsSection from "@/components/AchievementsSection";
 
 const Index = () => {
   const [currentView, setCurrentView] = useState("hero");
@@ -38,19 +40,9 @@ const Index = () => {
           </div>
         );
       case "achievements":
-        return (
-          <div className="p-8 text-center">
-            <h2 className="text-3xl font-bold mb-4">Achievements & Badges</h2>
-            <p className="text-muted-foreground">Track your progress and unlock new achievements</p>
-          </div>
-        );
+        return <AchievementsSection />;
       case "settings":
-        return (
-          <div className="p-8 text-center">
-            <h2 className="text-3xl font-bold mb-4">Settings</h2>
-            <p className="text-muted-foreground">Customize your learning experience</p>
-          </div>
-        );
+        return <SettingsSection />;
       default:
         return <StudentDashboard />;
     }
