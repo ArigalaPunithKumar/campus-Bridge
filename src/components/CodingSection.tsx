@@ -1,10 +1,21 @@
+import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import CodeEditor from "./CodeEditor";
 import { Code, Play, Trophy, Target, Zap, Brain, Users, TrendingUp } from "lucide-react";
 
 const CodingSection = () => {
+  const [showEditor, setShowEditor] = useState(false);
+  
+  if (showEditor) {
+    return (
+      <div className="p-8">
+        <CodeEditor onClose={() => setShowEditor(false)} />
+      </div>
+    );
+  }
   const codingTracks = [
     {
       title: "Python Mastery",
@@ -47,7 +58,10 @@ const CodingSection = () => {
           <p className="text-muted-foreground">Enhance your programming skills with structured learning paths</p>
         </div>
         <div className="flex gap-3">
-          <Button variant="coding">
+          <Button 
+            variant="coding"
+            onClick={() => setShowEditor(true)}
+          >
             <Play className="h-4 w-4 mr-2" />
             Start Coding
           </Button>
