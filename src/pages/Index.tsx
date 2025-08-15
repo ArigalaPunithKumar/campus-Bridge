@@ -31,6 +31,26 @@ const Index = () => {
     }
   }, [user, loading, currentView, navigate]);
 
+  useEffect(() => {
+    const handleStartCoding = () => {
+      setActiveSection("coding");
+      setCurrentView("dashboard");
+    };
+
+    const handleViewCourses = () => {
+      setActiveSection("academic");
+      setCurrentView("dashboard");
+    };
+
+    window.addEventListener('startCoding', handleStartCoding);
+    window.addEventListener('viewCourses', handleViewCourses);
+
+    return () => {
+      window.removeEventListener('startCoding', handleStartCoding);
+      window.removeEventListener('viewCourses', handleViewCourses);
+    };
+  }, []);
+
   const handleGetStarted = () => {
     if (user) {
       setCurrentView("dashboard");

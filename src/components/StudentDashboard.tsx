@@ -7,6 +7,16 @@ import academicIcon from "@/assets/academic-icon.jpg";
 import codingIcon from "@/assets/coding-icon.jpg";
 
 const StudentDashboard = () => {
+  const handleStartCoding = () => {
+    // This will be handled by the parent component
+    const event = new CustomEvent('startCoding');
+    window.dispatchEvent(event);
+  };
+
+  const handleViewCourses = () => {
+    const event = new CustomEvent('viewCourses');
+    window.dispatchEvent(event);
+  };
   return (
     <div className="space-y-8">
       {/* Welcome Header */}
@@ -103,7 +113,7 @@ const StudentDashboard = () => {
             </div>
           </div>
           
-          <Button variant="academic" className="w-full mt-4">
+          <Button variant="academic" className="w-full mt-4" onClick={handleViewCourses}>
             View All Courses
           </Button>
         </Card>
@@ -150,7 +160,7 @@ const StudentDashboard = () => {
             </div>
           </div>
           
-          <Button variant="coding" className="w-full mt-4">
+          <Button variant="coding" className="w-full mt-4" onClick={handleStartCoding}>
             Start Coding Session
           </Button>
         </Card>

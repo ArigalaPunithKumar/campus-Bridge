@@ -149,20 +149,70 @@ const CodeEditor = ({ onClose }: CodeEditorProps) => {
     }
   };
 
-  const aiReview = () => {
-    toast({
-      title: 'AI Review',
-      description: 'AI code review feature will analyze your code for improvements and best practices.',
-    });
-    // This would integrate with an AI service for code review
+  const aiReview = async () => {
+    if (!code.trim()) {
+      toast({
+        title: 'No Code',
+        description: 'Please write some code before requesting AI review.',
+        variant: 'destructive'
+      });
+      return;
+    }
+
+    try {
+      const { data, error } = await supabase.functions.invoke('ai-code-review', {
+        body: { code, language }
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: 'AI Code Review',
+        description: 'Review completed! Check the output panel.',
+      });
+      
+      setOutput(`=== AI CODE REVIEW ===\n\n${data.review}`);
+    } catch (error) {
+      console.error('Error in AI review:', error);
+      toast({
+        title: 'AI Review Error',
+        description: 'Failed to get AI review. Please try again.',
+        variant: 'destructive'
+      });
+    }
   };
 
-  const aiDebug = () => {
-    toast({
-      title: 'AI Debug',
-      description: 'AI debugging will help identify and fix issues in your code.',
-    });
-    // This would integrate with an AI service for debugging
+  const aiDebug = async () => {
+    if (!code.trim()) {
+      toast({
+        title: 'No Code',
+        description: 'Please write some code before requesting AI debugging.',
+        variant: 'destructive'
+      });
+      return;
+    }
+
+    try {
+      const { data, error } = await supabase.functions.invoke('ai-debug', {
+        body: { code, language }
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: 'AI Debug',
+        description: 'Debug analysis completed! Check the output panel.',
+      });
+      
+      setOutput(`=== AI DEBUG ANALYSIS ===\n\n${data.debugInfo}`);
+    } catch (error) {
+      console.error('Error in AI debug:', error);
+      toast({
+        title: 'AI Debug Error',
+        description: 'Failed to get AI debug analysis. Please try again.',
+        variant: 'destructive'
+      });
+    }
   };
 
   const resetCode = () => {
