@@ -8,10 +8,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/components/ui/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 import { GraduationCap, UserCheck, Shield, ArrowRight, Stars } from 'lucide-react';
 
 const Auth = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
   const [loginData, setLoginData] = useState({ email: '', password: '' });
   const [signupData, setSignupData] = useState({ 
     email: '', 
@@ -22,6 +25,40 @@ const Auth = () => {
   const { signIn, signUp } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
+
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(forgotPasswordEmail, {
+        redirectTo: `${window.location.origin}/auth`,
+      });
+      
+      if (error) {
+        toast({
+          title: "Error",
+          description: error.message,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Password reset email sent",
+          description: "Check your email for password reset instructions.",
+        });
+        setShowForgotPassword(false);
+        setForgotPasswordEmail('');
+      }
+    } catch (error) {
+      toast({
+        title: "An error occurred",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,7 +78,7 @@ const Auth = () => {
           title: "Welcome back!",
           description: "You have successfully signed in.",
         });
-        navigate('/');
+        window.location.href = '/';
       }
     } catch (error) {
       toast({
@@ -75,8 +112,9 @@ const Auth = () => {
       } else {
         toast({
           title: "Account created!",
-          description: "Please check your email to verify your account.",
+          description: "You will be redirected to the dashboard.",
         });
+        window.location.href = '/';
       }
     } catch (error) {
       toast({
@@ -163,15 +201,24 @@ const Auth = () => {
                       className="transition-all duration-200 focus:scale-[1.02]"
                     />
                   </div>
-                  <Button 
-                    type="submit" 
-                    className="w-full bg-gradient-hero hover:shadow-glow transition-all duration-300 group" 
-                    disabled={isLoading}
-                  >
-                    {isLoading ? 'Signing in...' : 'Sign In'}
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </form>
+                   <Button 
+                     type="submit" 
+                     className="w-full bg-gradient-hero hover:shadow-glow transition-all duration-300 group" 
+                     disabled={isLoading}
+                   >
+                     {isLoading ? 'Signing in...' : 'Sign In'}
+                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                   </Button>
+                 </form>
+                 <div className="text-center">
+                   <Button 
+                     variant="link" 
+                     className="text-sm text-muted-foreground hover:text-foreground"
+                     onClick={() => setShowForgotPassword(true)}
+                   >
+                     Forgot your password?
+                   </Button>
+                 </div>
               </TabsContent>
               
               <TabsContent value="signup" className="space-y-4">
@@ -242,19 +289,73 @@ const Auth = () => {
                       </SelectContent>
                     </Select>
                   </div>
-                  <Button 
-                    type="submit" 
-                    className="w-full bg-gradient-hero hover:shadow-glow transition-all duration-300 group" 
-                    disabled={isLoading}
-                  >
-                    {isLoading ? 'Creating account...' : 'Create Account'}
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </form>
+                   <Button 
+                     type="submit" 
+                     className="w-full bg-gradient-hero hover:shadow-glow transition-all duration-300 group" 
+                     disabled={isLoading}
+                   >
+                     {isLoading ? 'Creating account...' : 'Create Account'}
+                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                   </Button>
+                 </form>
+                 <div className="text-center">
+                   <Button 
+                     variant="link" 
+                     className="text-sm text-muted-foreground hover:text-foreground"
+                     onClick={() => setShowForgotPassword(true)}
+                   >
+                     Forgot your password?
+                   </Button>
+                 </div>
               </TabsContent>
             </Tabs>
           </CardContent>
         </Card>
+
+        {/* Forgot Password Modal */}
+        {showForgotPassword && (
+          <Card className="mt-4 backdrop-blur-sm bg-card/80 border-border/50 shadow-2xl">
+            <CardHeader className="text-center">
+              <CardTitle className="text-xl">Reset Password</CardTitle>
+              <CardDescription>
+                Enter your email to receive password reset instructions
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleForgotPassword} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="forgot-email">Email</Label>
+                  <Input
+                    id="forgot-email"
+                    type="email"
+                    placeholder="Enter your email"
+                    value={forgotPasswordEmail}
+                    onChange={(e) => setForgotPasswordEmail(e.target.value)}
+                    required
+                    className="transition-all duration-200 focus:scale-[1.02]"
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <Button 
+                    type="submit" 
+                    className="flex-1 bg-gradient-hero hover:shadow-glow transition-all duration-300" 
+                    disabled={isLoading}
+                  >
+                    {isLoading ? 'Sending...' : 'Send Reset Email'}
+                  </Button>
+                  <Button 
+                    type="button"
+                    variant="outline" 
+                    onClick={() => setShowForgotPassword(false)}
+                    disabled={isLoading}
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </form>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Role descriptions */}
         <div className="mt-6 text-center">

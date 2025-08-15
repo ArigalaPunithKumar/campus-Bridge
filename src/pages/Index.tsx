@@ -3,27 +3,40 @@ import { useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import StudentDashboard from "@/components/StudentDashboard";
+import FacultyDashboard from "@/components/FacultyDashboard";
+import AdminDashboard from "@/components/AdminDashboard";
 import AcademicSection from "@/components/AcademicSection";
 import CodingSection from "@/components/CodingSection";
 import CollaborativeSection from "@/components/CollaborativeSection";
 import SettingsSection from "@/components/SettingsSection";
 import AchievementsSection from "@/components/AchievementsSection";
+import ProfileDropdown from "@/components/ProfileDropdown";
+import NotificationsDropdown from "@/components/NotificationsDropdown";
+import ThemeToggle from "@/components/ThemeToggle";
 import { useAuth } from "@/hooks/useAuth";
 
 const Index = () => {
   const [currentView, setCurrentView] = useState("hero");
   const [activeSection, setActiveSection] = useState("dashboard");
-  const { user, loading } = useAuth();
+  const { user, profile, loading } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!loading && !user && currentView !== "hero") {
-      navigate("/auth");
+    if (!loading) {
+      if (!user && currentView !== "hero") {
+        navigate("/auth");
+      } else if (user && currentView === "hero") {
+        setCurrentView("dashboard");
+      }
     }
   }, [user, loading, currentView, navigate]);
 
   const handleGetStarted = () => {
-    setCurrentView("dashboard");
+    if (user) {
+      setCurrentView("dashboard");
+    } else {
+      navigate("/auth");
+    }
   };
 
   const handleSectionChange = (section: string) => {
@@ -38,6 +51,8 @@ const Index = () => {
 
     switch (activeSection) {
       case "dashboard":
+        if (profile?.role === "faculty") return <FacultyDashboard />;
+        if (profile?.role === "admin") return <AdminDashboard />;
         return <StudentDashboard />;
       case "academic":
         return <AcademicSection />;
@@ -50,6 +65,8 @@ const Index = () => {
       case "settings":
         return <SettingsSection />;
       default:
+        if (profile?.role === "faculty") return <FacultyDashboard />;
+        if (profile?.role === "admin") return <AdminDashboard />;
         return <StudentDashboard />;
     }
   };
@@ -84,8 +101,18 @@ const Index = () => {
         activeSection={activeSection} 
         onSectionChange={handleSectionChange} 
       />
-      <main className="flex-1 p-8 overflow-auto">
-        {renderContent()}
+      <main className="flex-1 flex flex-col">
+        {/* Top Header */}
+        <header className="flex items-center justify-end gap-4 p-4 border-b border-border">
+          <ThemeToggle />
+          <NotificationsDropdown />
+          <ProfileDropdown onSettingsClick={() => setActiveSection("settings")} />
+        </header>
+        
+        {/* Main Content */}
+        <div className="flex-1 p-8 overflow-auto">
+          {renderContent()}
+        </div>
       </main>
     </div>
   );
