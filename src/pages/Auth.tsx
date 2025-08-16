@@ -26,13 +26,18 @@ const Auth = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
+  const handleForgotPasswordModal = () => {
+    setShowForgotPassword(true);
+  };
+
   const handleForgotPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
+      const resetUrl = `${window.location.origin}/auth?reset=true`;
       const { error } = await supabase.auth.resetPasswordForEmail(forgotPasswordEmail, {
-        redirectTo: `${window.location.origin}/auth`,
+        redirectTo: resetUrl,
       });
       
       if (error) {
@@ -42,9 +47,11 @@ const Auth = () => {
           variant: "destructive",
         });
       } else {
+        // Open reset page in new tab
+        window.open(resetUrl, '_blank');
         toast({
           title: "Password reset email sent",
-          description: "Check your email for password reset instructions.",
+          description: "Check your email and the new tab for reset instructions.",
         });
         setShowForgotPassword(false);
         setForgotPasswordEmail('');
@@ -154,7 +161,7 @@ const Auth = () => {
             <Stars className="h-6 w-6 text-primary animate-pulse" />
           </div>
           <h1 className="text-4xl font-bold bg-gradient-hero bg-clip-text text-transparent">
-            Campus Bridge
+            Mohan Babu University
           </h1>
           <p className="text-muted-foreground">
             Your gateway to academic excellence
@@ -210,15 +217,15 @@ const Auth = () => {
                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                    </Button>
                  </form>
-                 <div className="text-center">
-                   <Button 
-                     variant="link" 
-                     className="text-sm text-muted-foreground hover:text-foreground"
-                     onClick={() => setShowForgotPassword(true)}
-                   >
-                     Forgot your password?
-                   </Button>
-                 </div>
+                  <div className="text-center">
+                    <Button 
+                      variant="link" 
+                      className="text-sm text-muted-foreground hover:text-foreground"
+                      onClick={handleForgotPasswordModal}
+                    >
+                      Forgot your password?
+                    </Button>
+                  </div>
               </TabsContent>
               
               <TabsContent value="signup" className="space-y-4">
@@ -298,15 +305,15 @@ const Auth = () => {
                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                    </Button>
                  </form>
-                 <div className="text-center">
-                   <Button 
-                     variant="link" 
-                     className="text-sm text-muted-foreground hover:text-foreground"
-                     onClick={() => setShowForgotPassword(true)}
-                   >
-                     Forgot your password?
-                   </Button>
-                 </div>
+                  <div className="text-center">
+                    <Button 
+                      variant="link" 
+                      className="text-sm text-muted-foreground hover:text-foreground"
+                      onClick={handleForgotPasswordModal}
+                    >
+                      Forgot your password?
+                    </Button>
+                  </div>
               </TabsContent>
             </Tabs>
           </CardContent>

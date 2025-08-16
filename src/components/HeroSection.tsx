@@ -16,11 +16,11 @@ const HeroSection = () => {
       <div className="relative z-10 container mx-auto px-4 py-16">
         <div className="text-center text-white mb-16">
           <h1 className="text-5xl md:text-7xl font-bold mb-6">
-            Campus <span className="text-accent-glow">Bridge</span>
+            Mohan Babu <span className="text-accent-glow">University</span>
           </h1>
           <p className="text-xl md:text-2xl mb-8 opacity-90 max-w-3xl mx-auto">
-            The ultimate integrated platform combining academic learning management 
-            with advanced coding skill development for university students.
+            Excellence in education at Sree SaiNath Nagar, Rangampeta, Tirupati. 
+            Advanced learning platform for academic and coding excellence.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button variant="hero" size="lg" className="text-lg px-8 py-4">

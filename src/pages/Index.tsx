@@ -8,8 +8,9 @@ import AdminDashboard from "@/components/AdminDashboard";
 import AcademicSection from "@/components/AcademicSection";
 import CodingSection from "@/components/CodingSection";
 import CollaborativeSection from "@/components/CollaborativeSection";
-import SettingsSection from "@/components/SettingsSection";
 import AchievementsSection from "@/components/AchievementsSection";
+import AttendanceSection from "@/components/AttendanceSection";
+import SettingsSection from "@/components/SettingsSection";
 import ProfileDropdown from "@/components/ProfileDropdown";
 import NotificationsDropdown from "@/components/NotificationsDropdown";
 import ThemeToggle from "@/components/ThemeToggle";
@@ -82,6 +83,8 @@ const Index = () => {
         return <CollaborativeSection />;
       case "achievements":
         return <AchievementsSection />;
+      case "attendance":
+        return <AttendanceSection />;
       case "settings":
         return <SettingsSection />;
       default:
