@@ -47,7 +47,7 @@ const AttendanceSection = () => {
           status,
           courses!inner(title, course_code)
         `)
-        .eq('student_id', profile?.user_id)
+        .eq('student_id', profile?.id)
         .order('date', { ascending: false })
         .limit(50);
 

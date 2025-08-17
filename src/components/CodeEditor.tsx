@@ -127,7 +127,7 @@ const CodeEditor = ({ onClose }: CodeEditorProps) => {
       const { error } = await supabase
         .from('coding_sessions')
         .upsert([{
-          user_id: profile.id,
+          user_id: profile.user_id,
           title: sessionTitle,
           language,
           code

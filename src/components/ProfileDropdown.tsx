@@ -20,8 +20,15 @@ const ProfileDropdown = ({ onSettingsClick }: ProfileDropdownProps) => {
   const { user, profile, signOut } = useAuth();
 
   const handleSignOut = async () => {
-    await signOut();
-    window.location.href = '/';
+    try {
+      await signOut();
+      // Clear any localStorage or sessionStorage if needed
+      localStorage.clear();
+      // Navigate to home page
+      window.location.href = '/';
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   };
 
   const getInitials = (name: string | null) => {

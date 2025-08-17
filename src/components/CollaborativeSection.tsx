@@ -71,7 +71,7 @@ const CollaborativeSection = () => {
             .from('study_group_members')
             .select('user_id')
             .eq('group_id', group.id)
-            .eq('user_id', profile?.id);
+            .eq('user_id', profile?.user_id);
 
           return {
             ...group,
@@ -116,7 +116,7 @@ const CollaborativeSection = () => {
         .from('study_groups')
         .insert([{
           ...newGroup,
-          created_by: profile.id
+          created_by: profile.user_id
         }])
         .select()
         .single();
@@ -128,7 +128,7 @@ const CollaborativeSection = () => {
         .from('study_group_members')
         .insert([{
           group_id: data.id,
-          user_id: profile.id
+          user_id: profile.user_id
         }]);
 
       toast({
@@ -157,7 +157,7 @@ const CollaborativeSection = () => {
         .from('study_group_members')
         .insert([{
           group_id: groupId,
-          user_id: profile.id
+          user_id: profile.user_id
         }]);
 
       if (error) throw error;
@@ -186,7 +186,7 @@ const CollaborativeSection = () => {
         .from('study_group_members')
         .delete()
         .eq('group_id', groupId)
-        .eq('user_id', profile.id);
+        .eq('user_id', profile.user_id);
 
       if (error) throw error;
 

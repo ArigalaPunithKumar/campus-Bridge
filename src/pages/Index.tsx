@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import StudentDashboard from "@/components/StudentDashboard";
@@ -100,18 +101,18 @@ const Index = () => {
         <HeroSection />
           <div className="container mx-auto px-4 py-16">
             <div className="text-center space-y-4">
-              <button
+              <Button 
                 onClick={handleGetStarted}
-                className="bg-gradient-hero text-white px-8 py-4 rounded-lg font-semibold text-lg hover:shadow-glow transition-all duration-300 mr-4"
+                className="bg-gradient-hero text-white px-8 py-4 rounded-lg font-semibold text-lg hover:shadow-glow transition-all duration-300 mr-4 animate-bounce-in"
               >
                 Access Student Portal
-              </button>
-              <button
+              </Button>
+              <Button
                 onClick={() => navigate('/auth')}
-                className="border border-primary text-primary px-8 py-4 rounded-lg font-semibold text-lg hover:bg-primary hover:text-white transition-all duration-300"
+                className="border-2 border-primary text-primary px-8 py-4 rounded-lg font-semibold text-lg hover:bg-primary hover:text-white transition-all duration-300 hover:shadow-medium"
               >
                 Sign In / Sign Up
-              </button>
+              </Button>
             </div>
           </div>
       </div>
@@ -124,16 +125,16 @@ const Index = () => {
         activeSection={activeSection} 
         onSectionChange={handleSectionChange} 
       />
-      <main className="flex-1 flex flex-col">
+      <main className="flex-1 flex flex-col animate-fade-in">
         {/* Top Header */}
-        <header className="flex items-center justify-end gap-4 p-4 border-b border-border">
+        <header className="flex items-center justify-end gap-4 p-4 border-b border-border bg-gradient-card backdrop-blur-sm">
           <ThemeToggle />
           <NotificationsDropdown />
           <ProfileDropdown onSettingsClick={() => setActiveSection("settings")} />
         </header>
         
         {/* Main Content */}
-        <div className="flex-1 p-8 overflow-auto">
+        <div className="flex-1 p-8 overflow-auto bg-gradient-to-br from-background via-background to-muted/20">
           {renderContent()}
         </div>
       </main>
