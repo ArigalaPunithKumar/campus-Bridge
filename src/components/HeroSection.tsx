@@ -5,11 +5,17 @@ import campusHero from "@/assets/campus-hero.jpg";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen bg-gradient-hero overflow-hidden">
-      {/* Background Image */}
+    <section className="relative min-h-screen bg-gradient-cosmic overflow-hidden">
+      {/* Beautiful Gradient Background */}
+      <div className="absolute inset-0 bg-gradient-hero-enhanced opacity-90" />
+      
+      {/* Animated Background Overlay */}
       <div 
-        className="absolute inset-0 bg-cover bg-center opacity-20"
-        style={{ backgroundImage: `url(${campusHero})` }}
+        className="absolute inset-0 bg-gradient-primary opacity-30 animate-pulse"
+        style={{
+          backgroundImage: `radial-gradient(circle at 25% 25%, hsl(var(--primary)/0.3) 0%, transparent 50%), 
+                           radial-gradient(circle at 75% 75%, hsl(var(--accent)/0.2) 0%, transparent 50%)`
+        }}
       />
       
       {/* Content */}
