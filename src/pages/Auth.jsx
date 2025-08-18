@@ -20,7 +20,7 @@ const Auth = () => {
     email: '', 
     password: '', 
     fullName: '', 
-    role: 'student' as 'student' | 'faculty' | 'admin' 
+    role: 'student'
   });
   const { signIn, signUp } = useAuth();
   const { toast } = useToast();
@@ -30,7 +30,7 @@ const Auth = () => {
     setShowForgotPassword(true);
   };
 
-  const handleForgotPassword = async (e: React.FormEvent) => {
+  const handleForgotPassword = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
@@ -67,7 +67,7 @@ const Auth = () => {
     }
   };
 
-  const handleSignIn = async (e: React.FormEvent) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
@@ -98,7 +98,7 @@ const Auth = () => {
     }
   };
 
-  const handleSignUp = async (e: React.FormEvent) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
@@ -268,7 +268,7 @@ const Auth = () => {
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="role">Role</Label>
-                    <Select value={signupData.role} onValueChange={(value: 'student' | 'faculty' | 'admin') => 
+                    <Select value={signupData.role} onValueChange={(value) => 
                       setSignupData({ ...signupData, role: value })
                     }>
                       <SelectTrigger className="transition-all duration-200 focus:scale-[1.02]">
