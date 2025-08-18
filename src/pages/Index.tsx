@@ -28,10 +28,17 @@ const Index = () => {
       if (!user && currentView !== "hero") {
         navigate("/auth");
       } else if (user && currentView === "hero") {
-        setCurrentView("dashboard");
+        // Redirect to role-specific portal
+        if (profile?.role === "faculty") {
+          navigate("/faculty");
+        } else if (profile?.role === "admin") {
+          navigate("/admin");
+        } else {
+          setCurrentView("dashboard");
+        }
       }
     }
-  }, [user, loading, currentView, navigate]);
+  }, [user, profile, loading, currentView, navigate]);
 
   useEffect(() => {
     const handleStartCoding = () => {
